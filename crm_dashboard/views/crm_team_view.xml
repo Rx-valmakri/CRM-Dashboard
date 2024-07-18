@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_stage_crm_team_form" model="ir.ui.view">
+      <field name="name">view.stage.crm.team.form</field>
+      <field name="model">crm.team</field>
+      <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//group[@name='right']" position="after">
+              <group name="crm_stage" string="Crm Stage">
+                 <field name="stage_id"/>
+              </group>
+          </xpath>
+      </field>
+    </record>
+</odoo>
