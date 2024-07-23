@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <t t-name="crm_dashboard.CrmDashboard">
-        <div class="">
+        <div class="crm_dashboard_main" style="margin-top: 30px;">
             <div>
                 <center>
                     <h1 style="margin:20px;">
                     CRM Dashboard</h1>
                 </center>
-                <div id="filter_div" style="margin-right: 700px; margin-left: 700px;">
-                        <select name="filter" id="filter" t-on-change="onSelectionChanged" style="border-radius: 8px;background-color: gainsboro;padding: 10px;border: 1px solid var(--o-border-color);">
+                <div id="filter_div" style="margin-right: 700px; margin-left: 700px; margin-bottom: 20px; margin-top: 30px;">
+                        <select name="filter" id="filter" t-on-change="onSelectionChanged" style="border-radius: 8px;background-color: gainsboro;padding: 10px;border: 1px solid var(--o-border-color);   color: darkgrey;">
                             <option t-att-value='all' t-att-selected="1">ALL</option>
                             <option t-att-value='year'>This Year</option>
                             <option t-att-value='quarter'>This Quarter</option>
@@ -17,20 +17,20 @@
                         </select>
                 </div>
             </div>
-               <div class="row main-section" style="margin-left: 120px;">
+               <div class="row main-section" style="padding: 20px;">
 <!--            Lead Tile-->
             <div id="leads" class="col-md-4 col-sm-6 tot_tasks oh-payslip"
                  style=" overflow: hidden; padding: 20px;">
                 <div class="oh-card" style="box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2);
-                display: flex; justify-content: center;" role="button">
+                display: flex; justify-content: center;background-color: azure;" role="button">
                     <div class="oh-card-body" t-on-click="onClick_leads"
                          style="padding: 5px 5px; float: left; width: 100%;
-                          height: auto; box-sizing: border-box; margin: 0;">
+                          height: 100px; box-sizing: border-box; margin: 0;">
                         <div class="stat-widget-one">
                             <div class="stat-icon bg-mauve-light d-flex justify-content-left align-items-left">
-                                <div style="background:#ff4d94; width:65px; text-align: center;">
+                                <div style="background:#ff4d94; width:65px; text-align: center;height: 90px;">
                                     <i class="fa fa-tasks text-mauve"
-                                       style="font-size:50px;margin-top: 8px;"/>
+                                       style="font-size:50px;margin-top: 20px;"/>
                                 </div>
                                 <div class="stat_content" style="
                                   text-align: center; font-weight: bold;
@@ -54,15 +54,15 @@
             <div id="opportunity" class="col-md-4 col-sm-6 tot_tasks oh-payslip"
                  style=" overflow: hidden; padding: 20px;">
                 <div class="oh-card" style="box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2);
-                display: flex; justify-content: center;" role="button">
+                display: flex; justify-content: center; background-color: azure;" role="button">
                     <div class="oh-card-body" t-on-click="onClick_opportunity"
                          style="padding: 5px 5px; float: left; width: 100%;
-                          height: auto; box-sizing: border-box; margin: 0;">
+                          height: 100px; box-sizing: border-box; margin: 0;">
                         <div class="stat-widget-one">
                             <div class="stat-icon bg-mauve-light d-flex justify-content-left align-items-left">
-                                <div style="background:yellow; width:65px; text-align: center;">
+                                <div style="background:yellow; width:65px; text-align: center; height: 90px;">
                                     <i class="fa fa-trophy  text-mauve"
-                                       style="font-size:50px;margin-top: 8px;"/>
+                                       style="font-size:50px;margin-top: 20px;"/>
                                 </div>
                                 <div class="stat-content" style="
                                   text-align: center; font-weight: bold;
@@ -87,15 +87,15 @@
                  class="col-md-4 col-sm-6 tot_tasks oh-payslip"
                  style=" overflow: hidden; padding: 20px;">
                 <div class="oh-card" style="box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2);
-                display: flex; justify-content: center;" role="button">
+                display: flex; justify-content: center;background-color: azure;" role="button">
                     <div class="oh-card-body"
                          style="padding: 5px 5px; float: left; width: 100%;
-                          height: auto; box-sizing: border-box; margin: 0;">
+                          height: 100px; box-sizing: border-box; margin: 0;">
                         <div class="stat-widget-one">
                             <div class="stat-icon bg-mauve-light d-flex justify-content-left align-items-left">
-                                <div style="background:#bf80ff;; width:65px; text-align: center;">
+                                <div style="background:#bf80ff;; width:65px; text-align: center;height: 90px;">
                                     <i class="fa fa-usd  text-mauve"
-                                       style="font-size:50px;margin-top: 8px;"/>
+                                       style="font-size:50px;margin-top: 20px;"/>
                                 </div>
                                 <div class="stat-content" style="
                                   text-align: center; font-weight: bold;
@@ -120,15 +120,15 @@
             <div id="revenue" class="col-md-4 col-sm-6 tot_tasks oh-payslip"
                  style=" overflow: hidden; padding: 20px;">
                 <div class="oh-card" style="box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2);
-                display: flex; justify-content: center;" role="button">
+                display: flex; justify-content: center;background-color: azure;" role="button">
                     <div class="oh-card-body"
                          style="padding: 5px 5px; float: left; width: 100%;
-                          height: auto; box-sizing: border-box; margin: 0;">
+                          height: 100px; box-sizing: border-box; margin: 0;">
                         <div class="stat-widget-one">
                             <div class="stat-icon bg-mauve-light d-flex justify-content-left align-items-left">
-                                <div style="background:#8aff80; width:65px; text-align: center;">
+                                <div style="background:#8aff80; width:65px; text-align: center;height: 90px;">
                                     <i class="fa fa-usd  text-mauve"
-                                       style="font-size:50px;margin-top: 8px;"/>
+                                       style="font-size:50px;margin-top: 20px;"/>
                                 </div>
                                 <div class="stat_content" style="
                                   text-align: center; font-weight: bold;
@@ -152,15 +152,15 @@
             <div id="Win_Ratio" class="col-md-4 col-sm-6 tot_tasks oh-payslip"
                  style=" overflow: hidden; padding: 20px;">
                 <div class="oh-card" style="box-shadow:2px 4px 8px 2px rgba(0,0,0.3,0.2);
-                display: flex; justify-content: center;" role="button">
+                display: flex; justify-content: center;background-color: azure;" role="button">
                     <div class="oh-card-body"
                          style="padding: 5px 5px; float: left; width: 100%;
-                          height: auto; box-sizing: border-box; margin: 0;">
+                          height: 100px; box-sizing: border-box; margin: 0;">
                         <div class="stat-widget-one">
                             <div class="stat-icon bg-mauve-light d-flex justify-content-left align-items-left">
-                                <div style="background:darkseagreen; width:65px; text-align: center;">
+                                <div style="background:darkseagreen; width:65px; text-align: center;height: 90px;">
                                     <i class="fa fa-percent"
-                                       style="font-size:50px;margin-top: 8px;"/>
+                                       style="font-size:50px;margin-top: 20px;"/>
                                 </div>
                                 <div class="stat_content" style="
                                   text-align: center; font-weight: bold;
@@ -187,6 +187,38 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="crm_chart_container" style="display: flex; overflow: scroll;scrollbar-width: none; margin-top: 20px;">
+            <div class="crm_bar_chart">
+                <center><h1> Leads/Opportunity </h1></center>
+                <canvas id="crm_graph" style="width: 700px;height: 350px; margin-top: 20px;"/>
+            </div>
+            <div class="crm_doug_chart">
+                <center><h1> Leads by Medium</h1></center>
+                <canvas id="crm_doug" style="width: 700px;height: 350px;margin-top: 30px;"/>
+            </div>
+            <div class="crm_doug_chart">
+                <center><h1> Leads by Campaign</h1></center>
+                <canvas id="crm_doug_camp" style="width: 700px;height: 350px;margin-top: 30px;"/>
+            </div>
+            <div class="crm_leads_table">
+                <center><h1> Leads by Month</h1></center>
+                <table id="crm_leads_table" style="width: 700px; margin-top: 60px;" class="table-hover table table-sm table-bordered table-borderless o_enable_linking">
+                    <thead id="crm_table_head">
+                        <tr id="month_head"> </tr>
+                        <tr id="months_head"> </tr>
+                        <tr id="count"> </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="monthly_count"> </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="crm_pie_chart">
+                <center><h1> Activity </h1></center>
+                <canvas id="crm_pie_chart" style="width: 700px;height: 350px;margin-top: 30px;"/>
             </div>
         </div>
         </div>

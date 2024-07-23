@@ -15,8 +15,9 @@
 
     'assets': {
         'web.assets_backend': [
-            'crm_dashboard/static/src/js/crm_dashboard.js',
+            'crm_dashboard/static/src/js/lib/Chart.bundle.js',
             'crm_dashboard/static/src/xml/crm_dashboard.xml',
+            'crm_dashboard/static/src/js/crm_dashboard.js',
         ],
     },
 }

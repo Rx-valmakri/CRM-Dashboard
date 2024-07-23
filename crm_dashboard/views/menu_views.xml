@@ -7,4 +7,10 @@
     <menuitem name="Dashboard" id="crm_dashboard"
               sequence="0" action="crm_dashboard_action"
               parent="crm.crm_menu_root"/>
+<!--    <template id="assets_backend" name="CRM Dashboard backend" inherit_id="web.assets_backend">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <script type="text/javascript" src="/crm_dashboard/static/src/js/crm_dashboard_graphs.js"/>-->
+<!--            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"/>-->
+<!--        </xpath>-->
+<!--    </template>-->
 </odoo>

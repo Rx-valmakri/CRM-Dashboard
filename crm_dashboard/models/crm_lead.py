@@ -22,6 +22,58 @@ class CrmLead(models.Model):
         total_loss = len(leads.search([('active', '=', False), ('user_id', '=', self.env.user.id)]).filtered(lambda r: r.type == 'opportunity'))
         win_ratio = (total_win / (total_loss + total_win)) * 100
 
+    # leads by medium
+        leads_group_by_medium = leads.read_group(
+            domain=[('user_id', '=', self.env.user.id), ('company_id', '=', company_id.id), ('type', '=', 'lead')],
+            fields=[],
+            groupby=['medium_id'],
+        )
+        for rec in leads_group_by_medium:
+            medium = rec['medium_id']
+            if not medium:
+                rec['medium_id'] = (0, 'Null')
+        mapped_data = dict([(m['medium_id'][1], m['medium_id_count']) for m in leads_group_by_medium])
+        medium = list(mapped_data.keys())
+        medium_count = list(mapped_data.values())
+
+    # leads by campaign
+        leads_group_by_campaign = leads.read_group(
+            domain=[('user_id', '=', self.env.user.id),
+                    ('company_id', '=', company_id.id), ('type', '=', 'lead')],
+            fields=[],
+            groupby=['campaign_id'],
+        )
+        for rec in leads_group_by_campaign:
+            campaign = rec['campaign_id']
+            if not campaign:
+                rec['campaign_id'] = (0, 'Null')
+        data = dict([(m['campaign_id'][1], m['campaign_id_count']) for m in
+                     leads_group_by_campaign])
+        campaign = list(data.keys())
+        campaign_count = list(data.values())
+
+    # Leads by Activity
+        act = my_leads.filtered(lambda r: r.activity_type_id)
+        activity_count = []
+        act_ids = act.activity_type_id.ids
+        for rec in act_ids:
+            count = len(my_leads.filtered(lambda r: r.activity_type_id.id == rec))
+            activity_count.append(count)
+        activity = act.activity_type_id.mapped('name')
+
+    # Leads by Month
+        leads_group_by_month = leads.read_group(
+            domain=[('user_id', '=', self.env.user.id),
+                    ('company_id', '=', company_id.id), ('type', '=', 'lead')],
+            fields=[],
+            groupby=['create_date'],
+        )
+        monthly_data = dict(
+            [(m['create_date'], m['create_date_count']) for m in
+             leads_group_by_month])
+        month = list(monthly_data.keys())
+        monthly_count = list(monthly_data.values())
+
         return {
             'total_leads': len(my_leads),
             'total_opportunity': len(my_opportunity),
@@ -31,6 +83,14 @@ class CrmLead(models.Model):
             'win_ratio': win_ratio,
             'total_win': total_win,
             'total_loss': total_loss,
+            'medium': medium,
+            'medium_count': medium_count,
+            'campaign': campaign,
+            'campaign_count': campaign_count,
+            'month': month,
+            'monthly_count': monthly_count,
+            'activity': activity,
+            'activity_count': activity_count
         }
 
     @api.model
@@ -40,6 +100,7 @@ class CrmLead(models.Model):
         company_id = self.env.company
         leads = self.search([('company_id', '=', company_id.id),
                              ('user_id', '=', self.env.user.id)])
+        domain = [('user_id', '=', self.env.user.id), ('company_id', '=', company_id.id), ('type', '=', 'lead')]
         month = False
         year = False
         start_date = False
@@ -51,12 +112,14 @@ class CrmLead(models.Model):
             leads = self.search([('company_id', '=', company_id.id),
                                  ('user_id', '=', self.env.user.id),
                                  ('create_date', '>=', year)])
+            domain = [('user_id', '=', self.env.user.id), ('company_id', '=', company_id.id), ('type', '=', 'lead'), ('create_date', '>=', year)]
 
         if selected_filter == "This Quarter":
             quarterly_wise_data = self.get_quarterly_wise_data(company_id, current_date)
             leads = quarterly_wise_data[0]
             start_date = quarterly_wise_data[1]
             end_date = quarterly_wise_data[2]
+            domain = [('user_id', '=', self.env.user.id), ('company_id', '=', company_id.id), ('type', '=', 'lead'), ('create_date', '>=', start_date), ('create_date', '<', end_date)]
 
         if selected_filter == "This Month":
             # current month
@@ -64,12 +127,14 @@ class CrmLead(models.Model):
             leads = self.search([('company_id', '=', company_id.id),
                                  ('user_id', '=', self.env.user.id),
                                  ('create_date', '>=', month)])
+            domain = [('user_id', '=', self.env.user.id), ('company_id', '=', company_id.id), ('type', '=', 'lead'), ('create_date', '>=', month)]
+
         if selected_filter == "This Week":
-            print("Parsing :", current_date)
             weekly_wise_data = self.get_weekly_wise_data(company_id, current_date)
             leads = weekly_wise_data[0]
             start_date = weekly_wise_data[1]
             end_date = weekly_wise_data[2]
+            domain = [('user_id', '=', self.env.user.id), ('company_id', '=', company_id.id), ('type', '=', 'lead'), ('create_date', '>=', start_date), ('create_date', '<', end_date)]
 
         my_leads = leads.filtered(lambda r: r.type == 'lead')
         my_opportunity = leads.filtered(lambda r: r.type == 'opportunity')
@@ -85,6 +150,58 @@ class CrmLead(models.Model):
         if total_win == 0:
             win_ratio = 0
 
+    # Leads by medium
+        leads_group_by_medium = leads.read_group(
+            domain=domain,
+            fields=[],
+            groupby=['medium_id'],
+        )
+        for rec in leads_group_by_medium:
+            medium = rec['medium_id']
+            if not medium:
+                rec['medium_id'] = (0, 'Null')
+        mapped_data = dict([(m['medium_id'][1], m['medium_id_count']) for m in
+                            leads_group_by_medium])
+        medium = list(mapped_data.keys())
+        medium_count = list(mapped_data.values())
+
+    # Leads by Campaign
+        leads_group_by_campaign = leads.read_group(
+            domain=domain,
+            fields=[],
+            groupby=['campaign_id'],
+        )
+        for rec in leads_group_by_campaign:
+            campaign = rec['campaign_id']
+            if not campaign:
+                rec['campaign_id'] = (0, 'Null')
+        data = dict([(m['campaign_id'][1], m['campaign_id_count']) for m in
+                            leads_group_by_campaign])
+        campaign = list(data.keys())
+        campaign_count = list(data.values())
+
+    # Leads by Month
+        leads_group_by_month = leads.read_group(
+            domain=domain,
+            fields=[],
+            groupby=['create_date'],
+        )
+        monthly_data = dict(
+            [(m['create_date'], m['create_date_count']) for m in
+             leads_group_by_month])
+        months = list(monthly_data.keys())
+        monthly_count = list(monthly_data.values())
+
+    # Leads by Activity
+        act = my_leads.filtered(lambda r: r.activity_type_id)
+        activity_count = []
+        act_ids = act.activity_type_id.ids
+        for rec in act_ids:
+            count = len(
+                my_leads.filtered(lambda r: r.activity_type_id.id == rec))
+            activity_count.append(count)
+        activity = act.activity_type_id.mapped('name')
+
         return {
             'total_leads': len(my_leads),
             'total_opportunity': len(my_opportunity),
@@ -98,6 +215,14 @@ class CrmLead(models.Model):
             'month': month,
             'start_date': start_date,
             'end_date': end_date,
+            'medium': medium,
+            'medium_count': medium_count,
+            'campaign': campaign,
+            'campaign_count': campaign_count,
+            'months': months,
+            'monthly_count': monthly_count,
+            'activity': activity,
+            'activity_count': activity_count
         }
 
     def get_quarterly_wise_data(self, company_id, current_date):
@@ -139,6 +264,7 @@ class CrmLead(models.Model):
         return leads, start_date, end_date
 
     def get_weekly_wise_data(self, company_id, current_date):
+        """ Return weekly wise leads, start_date, end_date """
         start = current_date - timedelta(days=current_date.weekday())
         end = start + timedelta(days=6)
         leads = self.search([('company_id', '=', company_id.id),
